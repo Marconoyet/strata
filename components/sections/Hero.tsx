@@ -6,10 +6,10 @@ import { motion } from "framer-motion";
 import BookNowButton from "@/components/basic/BookNowButton";
 
 const SLIDES = [
-  "/images/hero/1.webp",
-  "/images/hero/2.webp",
-  "/images/hero/3.webp",
-  "/images/hero/4.webp",
+  "/images/hero/1.png",
+  "/images/hero/2.png",
+  "/images/hero/3.png",
+  "/images/hero/4.png",
 ];
 
 const SLIDE_DURATION = 10000;
