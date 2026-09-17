@@ -89,7 +89,7 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-3 md:gap-4">
+        <div className="flex items-center gap-3 md:gap-4 -mr-2 md:mr-0 md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2">
           <button
             onClick={toggleLanguage}
             className="flex justify-center items-center font-black tracking-widest transition-opacity hover:opacity-60 whitespace-nowrap"
