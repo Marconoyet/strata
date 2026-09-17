@@ -64,8 +64,9 @@ export function Navbar() {
           <img
             src="/images/strata-small.png"
             alt="STRATA logo"
-            className="object-contain"
+            className="object-contain transition-[filter] duration-300"
             style={{
+              filter: scrolled ? "none" : "brightness(0) invert(1)",
               height: "clamp(26px, 3.2vw, 36px)",
               maxWidth: "clamp(96px, 18vw, 150px)",
             }}

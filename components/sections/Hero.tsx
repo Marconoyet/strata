@@ -2,10 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import BookNowButton from "@/components/basic/BookNowButton";
 
-const DURATIONS = [10000, 2000];
+const SLIDES = [
+  "/images/hero/1.webp",
+  "/images/hero/2.webp",
+  "/images/hero/3.webp",
+  "/images/hero/4.webp",
+];
+
+const SLIDE_DURATION = 10000;
+const FADE_DURATION = 0.9;
 
 export function Hero() {
   const { lang, t } = useLanguage();
@@ -13,8 +21,8 @@ export function Hero() {
 
   useEffect(() => {
     const timer = setTimeout(
-      () => setState((s) => (s + 1) % 2),
-      DURATIONS[state]
+      () => setState((s) => (s + 1) % SLIDES.length),
+      SLIDE_DURATION
     );
     return () => clearTimeout(timer);
   }, [state]);
@@ -40,56 +48,22 @@ export function Hero() {
           "radial-gradient(ellipse at 50% 30%, #ffffff 0%, #fbfbfb 60%, #f7f7f7 100%)",
       }}
     >
-      <div className="flex-1 relative" style={{ marginTop: "64px" }}>
-        <AnimatePresence mode="wait">
-          {state === 0 && (
-            <motion.div
-              key="tooth"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.9 }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <motion.img
-                src="/images/hero-tooth.png"
-                alt="STRATA"
-                animate={{ y: [0, -20, 0] }}
-                transition={{ repeat: Infinity, duration: 5.5 }}
-                className="object-contain drop-shadow-2xl"
-                style={{
-                  height: "clamp(170px, min(46dvh, 52vw), 460px)",
-                  maxWidth: "82vw",
-                }}
-              />
-            </motion.div>
-          )}
+      {SLIDES.map((src, index) => (
+        <motion.img
+          key={src}
+          src={src}
+          alt="STRATA"
+          loading={index === 0 ? "eager" : "lazy"}
+          initial={false}
+          animate={{ opacity: state === index ? 1 : 0 }}
+          transition={{ duration: FADE_DURATION }}
+          className="absolute inset-0 w-full h-full object-cover object-[70%_center] pointer-events-none"
+        />
+      ))}
 
-          {state === 1 && (
-            <motion.div
-              key="brand"
-              initial={{ opacity: 0, scale: 0.93 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-              className="absolute inset-0 flex items-center justify-center px-4"
-            >
-              <img
-                src="/images/strata-big.png"
-                alt="STRATA"
-                className="object-contain"
-                style={{
-                  width: "clamp(180px, 58vw, 780px)",
-                  maxWidth: "86vw",
-                  maxHeight: "clamp(110px, 34dvh, 340px)",
-                }}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+      <div className="flex-1" />
 
-      <div className="flex-shrink-0 backdrop-blur">
+      <div className="relative z-10 flex-shrink-0">
         {/* Desktop */}
         <div className="hidden md:flex items-center justify-between mb-4 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-40 py-4 md:py-5">
           <BookNowButton text={t.hero.bookNow} onClick={scrollToBook} />
@@ -101,7 +75,7 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="text-center text-black" dir="rtl">
+          <div className="text-center text-white" dir="rtl">
             <p className="text-[16px] lg:text-[18px] font-medium leading-tight whitespace-nowrap">
               {t.hero.clinic.name}
             </p>
